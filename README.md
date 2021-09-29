@@ -62,8 +62,11 @@ blocksdict: {str:[[`block`](https://github.com/PolarsBear/parseaia/blob/main/REA
 
 ### Properties
 authURL: [str] | for authentication. But authentication for what?
+
 YaVersion: str | version of "Ya", whatever that may be
+
 Source: str | Don't ask me! I dunno what this does.
+
 Properties: [`Properties`](https://github.com/PolarsBear/parseaia/blob/main/README.md#the-ui-properties-class) | contains all properties of the UI, and is the gateway into actual UI stuff, like the [`components`](https://github.com/PolarsBear/parseaia/blob/main/README.md#the-ui-component-class)
 
 ## The code `Block` class
@@ -115,9 +118,3 @@ Version: str | Version of the component
 Uuid: str | Unique id of the component
 
 There will be more properties for the other unique properties of components, like Text, Color, and such
-
-
-
-
-
-
