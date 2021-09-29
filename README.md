@@ -113,8 +113,11 @@ Actually called `Components` cuz ripped out of json blah blah blah you know the 
 
 ### Properties
 Name: str | Name of the component
+
 Type: str | Type of component
+
 Version: str | Version of the component
+
 Uuid: str | Unique id of the component
 
 There will be more properties for the other unique properties of components, like Text, Color, and such
