@@ -37,26 +37,26 @@ scrname: str | Name of the screen, in the project
 tempfolderfp = "parseaiatemp": str | Keyword argument, defines the name of the temp folder used by the library to unzip the .aia
 
 ### Properties
-Code: [`Code`] | holds all the information on the code blocks in the screen
+Code: [`Code`](https://github.com/PolarsBear/parseaia/blob/main/README.md#the-code-class) | holds all the information on the code blocks in the screen
 
-UI: [`UI`] | holds all the information on the UI components in the screen
+UI: [`UI`](https://github.com/PolarsBear/parseaia/blob/main/README.md#the-ui-class) | holds all the information on the UI components in the screen
 
 ## The `Code` class
 
 ### Properties
 xml: xml | an object that is simply the original xml in the form of an object, not suggested
 
-blocks: [[`block`]] | a list, the top of the hierarchy of [`blocks`], all the events, global variable declarations, and procedure definitions
+blocks: [[`block`](https://github.com/PolarsBear/parseaia/blob/main/README.md#the-code-block-class)] | a list, the top of the hierarchy of [`blocks`], all the events, global variable declarations, and procedure definitions
 
-events: [[`block`]] | a list of the event [`blocks`]
+events: [[`block`](https://github.com/PolarsBear/parseaia/blob/main/README.md#the-code-block-class)] | a list of the event [`blocks`](https://github.com/PolarsBear/parseaia/blob/main/README.md#the-code-block-class)
 
-gvars: [[`block`]] | a list of the global variable declarations
+gvars: [[`block`](https://github.com/PolarsBear/parseaia/blob/main/README.md#the-code-block-class)] | a list of the global variable declarations
 
-procedures: [[`block`]] | a list of procedure definitions
+procedures: [[`block`](https://github.com/PolarsBear/parseaia/blob/main/README.md#the-code-block-class)] | a list of procedure definitions
 
-blockslist: [[`block`]] | a list of all [`blocks`], without any regard for hierarchy
+blockslist: [[`block`](https://github.com/PolarsBear/parseaia/blob/main/README.md#the-code-block-class)] | a list of all [`blocks`](https://github.com/PolarsBear/parseaia/blob/main/README.md#the-code-block-class), without any regard for hierarchy
 
-blocksdict: {str:[[`block`]]} a dictionary of all [`blocks`], each key is a type of [`block`], with the list of all blocks of that type as its value
+blocksdict: {str:[[`block`](https://github.com/PolarsBear/parseaia/blob/main/README.md#the-code-block-class)]} a dictionary of all [`blocks`](https://github.com/PolarsBear/parseaia/blob/main/README.md#the-code-block-class), each key is a type of [`block`](https://github.com/PolarsBear/parseaia/blob/main/README.md#the-code-block-class), with the list of all [`blocks`](https://github.com/PolarsBear/parseaia/blob/main/README.md#the-code-block-class) of that type as its value
 
 ## The `UI` class
 
@@ -64,7 +64,7 @@ blocksdict: {str:[[`block`]]} a dictionary of all [`blocks`], each key is a type
 authURL: [str] | for authentication. But authentication for what?
 YaVersion: str | version of "Ya", whatever that may be
 Source: str | Don't ask me! I dunno what this does.
-Properties: [`Properties`] | contains all properties of the UI, and is the gateway into actual UI stuff, like the components
+Properties: [`Properties`](https://github.com/PolarsBear/parseaia/blob/main/README.md#the-ui-properties-class) | contains all properties of the UI, and is the gateway into actual UI stuff, like the [`components`](https://github.com/PolarsBear/parseaia/blob/main/README.md#the-ui-component-class)
 
 ## The code `Block` class
 This class is not actually called `Block`, but instead `betterblock`, since most classes are actually just ripped straight out of the xml/json, and inside of the xml, there was something named `block`
@@ -103,7 +103,7 @@ Title: str | Title of the screen
 
 Uuid: str | Unique Id of the screen
 
-Components: [`Component`]
+Components: [`Component`](https://github.com/PolarsBear/parseaia/blob/main/README.md#the-ui-component-class)
 
 ## The UI `Component` class
 Actually called `Components` cuz ripped out of json blah blah blah you know the drill
