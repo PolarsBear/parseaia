@@ -3,9 +3,12 @@ import setuptools
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
+with open("version.txt","r") as verf:
+    version = verf.read()
+
 setuptools.setup(
     name="Parse-AIA-PolarsBear",
-    version="0.1.7",
+    version=version,
     author="Lars Von Wangenheim",
     author_email="larzitovw@gmail.com",
     description="A package for reading .aia files from App Inventor",

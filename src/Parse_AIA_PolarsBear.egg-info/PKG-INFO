@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: Parse-AIA-PolarsBear
-Version: 0.1.6
+Version: 0.1.7
 Summary: A package for reading .aia files from App Inventor
 Home-page: https://github.com/PolarsBear/parseaia
 Author: Lars Von Wangenheim
