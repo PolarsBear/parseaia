@@ -19,6 +19,11 @@ class value:
     name: str
     block: any  # block
 
+class eventparam:
+    name: str
+
+class arg:
+    name:str
 
 class next:
     block: any  # block

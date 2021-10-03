@@ -1,1 +1,1 @@
-from .main import Screen
+from .main import Project

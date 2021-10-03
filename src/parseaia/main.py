@@ -5,46 +5,28 @@ from .todict import readxml, readjson
 import os
 import zipfile
 
-
-class Screen():  # Usage: Project("path/to/my/project.aia")
+class Screen:  # Usage: Project("path/to/my/project.aia")
     Code: Code
     UI: UI
 
-    def __init__(self, fp, scrname, tempfolderfp="parseaiatemp"):
-        if not os.path.isdir(tempfolderfp):
-            os.mkdir(tempfolderfp)
-        else:
-            deletedir(tempfolderfp)
-            os.mkdir(tempfolderfp)
+    def __init__(self, scrname, dir):
 
-        with zipfile.PyZipFile(fp) as zipf:
-            zipf.extractall(tempfolderfp)
-
-        self.getcode(scrname, tempfolderfp)
-        self.getUI(scrname, tempfolderfp)
-
-        deletedir(tempfolderfp)
+        self.getcode(scrname, dir)
+        self.getUI(scrname, dir)
 
 
-    def getUI(self,scrname,tempfolderfp):
-        uipath = f"{tempfolderfp}/src/appinventor/"
-        for i in range(2):
-            uipath += os.listdir(uipath)[0] + "/"
 
-        uipath += scrname + ".scm"
-        d = readjson(uipath)
 
+    def getUI(self,scrname,dir):
+        dir += scrname + ".scm"
+        d = readjson(dir)
         self.UI = objectfromdict(UI,d)
 
 
 
-    def getcode(self, scrname,tempfolderfp):
-        blockpath = f"{tempfolderfp}/src/appinventor/"
-        for i in range(2):
-            blockpath += os.listdir(blockpath)[0] + "/"
-
-        blockpath += scrname + ".bky"
-        d = readxml(blockpath)
+    def getcode(self, scrname,dir):
+        dir += scrname + ".bky"
+        d = readxml(dir)
         self.Code = objectfromdict(Code, d)
 
         topblocks = self.Code.xml.block
@@ -76,4 +58,25 @@ class Screen():  # Usage: Project("path/to/my/project.aia")
                 self.Code.blocksdict[i.type] = [i]
 
 
+class Project:
+    def __init__(self,fp,tempfolderfp="parseaiatemp"):
+        self.screens = []
+        if not os.path.isdir(tempfolderfp):
+            os.mkdir(tempfolderfp)
+        else:
+            deletedir(tempfolderfp)
+            os.mkdir(tempfolderfp)
 
+        with zipfile.PyZipFile(fp) as zipf:
+            zipf.extractall(tempfolderfp)
+
+        d1 = os.listdir(f"{tempfolderfp}/src/appinventor")[0]
+        d2 = os.listdir(f"{tempfolderfp}/src/appinventor/{d1}")[0]
+        dir = f"{tempfolderfp}/src/appinventor/{d1}/{d2}/"
+        for i in os.listdir(dir):
+            if i.endswith(".bky"):
+                scr = Screen(i.replace(".bky","",1),dir)
+                self.__setattr__(i.replace(".bky","",1),scr)
+                self.screens.append(scr)
+
+        deletedir(tempfolderfp)

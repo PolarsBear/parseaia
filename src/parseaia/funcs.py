@@ -48,8 +48,11 @@ def getblocks(block):
     if "next" in block.__dict__:
         l += getblocks(block.next.block)
     if "statement" in block.__dict__:
-        for i in block.statement:
-            l += getblocks(i.block)
+        if block.statement.__class__.__name__ == "list":
+            for i in block.statement:
+                l += getblocks(i.block)
+        else:
+            l += getblocks(block.statement.block)
     if "value" in block.__dict__:
         if block.value.__class__.__name__ == "list":
             for i in block.value:
