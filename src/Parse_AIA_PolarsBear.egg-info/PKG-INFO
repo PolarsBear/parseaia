@@ -1,3 +1,20 @@
+Metadata-Version: 2.1
+Name: Parse-AIA-PolarsBear
+Version: 0.1.6
+Summary: A package for reading .aia files from App Inventor
+Home-page: https://github.com/PolarsBear/parseaia
+Author: Lars Von Wangenheim
+Author-email: larzitovw@gmail.com
+License: UNKNOWN
+Project-URL: Bug Tracker, https://github.com/PolarsBear/parseaia/issues
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
 # Parse .AIA
 This is a simple python library for parsing the contents of .AIA files ([App Inventor](https://appinventor.mit.edu/) Projects).
 
@@ -121,3 +138,4 @@ Version: str | Version of the component
 Uuid: str | Unique id of the component
 
 There will be more properties for the other unique properties of components, like Text, Color, and such
+
