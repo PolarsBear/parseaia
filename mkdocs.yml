@@ -1,1 +1,3 @@
 site_name: ParseAIA Documentation
+nav:
+    - 'index.md'
