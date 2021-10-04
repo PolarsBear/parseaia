@@ -2,8 +2,10 @@ from .codeclasses import Code
 from .uiclasses import UI
 from .funcs import objectfromdict, getblocks, blocktobetterblock, deletedir
 from .todict import readxml, readjson
-import os
-import zipfile
+import os, zipfile
+from PIL import Image
+from time import sleep
+
 
 class Screen:  # Usage: Project("path/to/my/project.aia")
     Code: Code
@@ -11,20 +13,15 @@ class Screen:  # Usage: Project("path/to/my/project.aia")
 
     def __init__(self, scrname, dir):
 
-        self.getcode(scrname, dir)
+        self.getCode(scrname, dir)
         self.getUI(scrname, dir)
 
-
-
-
-    def getUI(self,scrname,dir):
+    def getUI(self, scrname, dir):
         dir += scrname + ".scm"
         d = readjson(dir)
-        self.UI = objectfromdict(UI,d)
+        self.UI = objectfromdict(UI, d)
 
-
-
-    def getcode(self, scrname,dir):
+    def getCode(self, scrname, dir):
         dir += scrname + ".bky"
         d = readxml(dir)
         self.Code = objectfromdict(Code, d)
@@ -48,8 +45,6 @@ class Screen:  # Usage: Project("path/to/my/project.aia")
             self.Code.blocks.append(blocktobetterblock(i))
             self.Code.blockslist += getblocks(i)
 
-
-
         self.Code.blocksdict = {}
         for i in self.Code.blockslist:
             if i.type in self.Code.blocksdict:
@@ -59,8 +54,14 @@ class Screen:  # Usage: Project("path/to/my/project.aia")
 
 
 class Project:
-    def __init__(self,fp,tempfolderfp="parseaiatemp"):
+    screens: [Screen]
+    images: [Image.Image]
+    assets: {str:str}
+
+    def __init__(self, fp, tempfolderfp="parseaiatemp"):
         self.screens = []
+        self.images = []
+        self.assets = {}
         if not os.path.isdir(tempfolderfp):
             os.mkdir(tempfolderfp)
         else:
@@ -75,8 +76,28 @@ class Project:
         dir = f"{tempfolderfp}/src/appinventor/{d1}/{d2}/"
         for i in os.listdir(dir):
             if i.endswith(".bky"):
-                scr = Screen(i.replace(".bky","",1),dir)
-                self.__setattr__(i.replace(".bky","",1),scr)
+                scr = Screen(i.replace(".bky", "", 1), dir)
+                self.__setattr__(i.replace(".bky", "", 1), scr)
                 self.screens.append(scr)
 
+        self.getAssets(tempfolderfp)
+
         deletedir(tempfolderfp)
+
+    def getAssets(self, dir):
+        path = dir + "/assets/"
+        for i in os.listdir(path):
+            if not os.path.isdir(path + i):
+                try:
+                    # Madness for disconnecting image from file
+                    tmp = Image.open(fp=path + i)
+                    tmp2 = Image.frombytes(tmp.mode,tmp.size,tmp.tobytes())
+                    tmp.close()
+                    tmp2.filename = i
+                    self.images.append(tmp2)
+
+                except:
+                    # Not Image, read text
+                    with open(path+i,"r") as asset:
+                        self.assets[i] = asset.read()
+

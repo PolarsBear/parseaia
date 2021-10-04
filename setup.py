@@ -1,4 +1,4 @@
-ver = "0.2.1"
+ver = "0.2.2"
 import setuptools, os
 
 print(os.listdir("./"))
@@ -23,7 +23,7 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    install_requires=["xmltodict"],
+    install_requires=["xmltodict","Pillow","zipfile","json"],
     package_dir={"": "src"},
     packages=setuptools.find_packages(where="src"),
     python_requires=">=3.6",

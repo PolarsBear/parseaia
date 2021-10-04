@@ -24,6 +24,8 @@ Every [`Screen`](#class-mainscreen) in the project is a property of this class, 
 
 ##### Properties
 * screens: [`[Screen]`](#class-mainscreen) A list of screens, each holding its own [`Code`](#class-codeclassescode) and [`UI`](#class-uiclassesui)
+* images: [`[PIL.Image.Image]`](https://pillow.readthedocs.io/en/stable/reference/Image.html#the-image-class) A list of all the images extracted from the project, on top of all the properties from Pillow, they also have `filename`, which is their original filename, as a string
+* assets: {`str`:`str`} A dictionary of all the non-image assets, the keys are the filenames, and the values are the text in their files
 
 ### *class* main.**Screen**
 
