@@ -125,7 +125,7 @@ Represents the properties of a screen [`UI`](#class-uiclassesui) element from a 
 Represents a Component of a screen [`UI`](#class-uiclassesui) element from a [`screen`](#class-mainscreen). Has many more potential properties than shown here, these are just the default ones, if for example the element's background color is changed, there would be a property to represent that
 
 ##### Properties
-* Name: `str` Name of the element (IE: "Button1")
-* Type: `str` Type of object
+* Name: `str` Name of the ui element (IE: "Button1")
+* Type: `str` Type of ui element
 * Version `str` Why MIT, why?
 * Uuid: `str` A number, the unique id of the element
