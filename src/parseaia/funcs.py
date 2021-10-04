@@ -92,7 +92,7 @@ def blocktobetterblock(block):
 
     bb.values = []
     if "value" in block.__dict__:
-        if block.value.__class__.__name__ != "list":
+        if type(block.value).__name__ != "list":
             block.value = [block.value]
         for i in block.value:
             tempblock = blocktobetterblock(i.block)

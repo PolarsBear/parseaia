@@ -1,4 +1,4 @@
-ver = "0.2.2"
+ver = "0.1.1"
 import setuptools, os
 
 print(os.listdir("./"))
@@ -7,7 +7,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="Parse-AIA-PolarsBear",
+    name="parseaia",
     version=ver,
     author="Lars Von Wangenheim",
     author_email="larzitovw@gmail.com",
@@ -23,7 +23,7 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    install_requires=["xmltodict","Pillow","zipfile","json"],
+    install_requires=["xmltodict","Pillow"],
     package_dir={"": "src"},
     packages=setuptools.find_packages(where="src"),
     python_requires=">=3.6",

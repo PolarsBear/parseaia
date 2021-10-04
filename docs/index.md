@@ -113,7 +113,7 @@ Represents the properties of a screen [`UI`](#class-uiclassesui) element from a 
 ##### Properties
 * Name: `str` Name of the screen
 * Type: `str` Type of element, can only be "Form"
-* Version: `str` I once was a naive little programmer, and thought that MIT's code was actually good, but I was WRONG, this is complete madness, and coming from me, that's something
+* Version: `str` I used to believe that App Inventor's code was actually good...
 * AppName: `str` Name of the app
 * Title: `str` Screen's visible name (the one that shows up in that top bar thing)
 * Uuid: `str` A number, the unique id of the screen
@@ -127,5 +127,5 @@ Represents a Component of a screen [`UI`](#class-uiclassesui) element from a [`s
 ##### Properties
 * Name: `str` Name of the ui element (IE: "Button1")
 * Type: `str` Type of ui element
-* Version `str` Why MIT, why?
+* Version `str` Why App Inventor? why?
 * Uuid: `str` A number, the unique id of the element
