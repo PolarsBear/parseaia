@@ -19,11 +19,14 @@ class value:
     name: str
     block: any  # block
 
+
 class eventparam:
     name: str
 
+
 class arg:
     name:str
+
 
 class next:
     block: any  # block
@@ -65,15 +68,35 @@ class Code:
     blocks: list
     blocksdict: dict
 
+
 class betterstatement:
     rawself: statement
     name: str
-    child = any  # betterblock
+    next = any  # betterblock
 
     def __init__(self,rawstatement:statement):
         self.rawself = rawstatement
         self.name = rawstatement.name
         self.child = rawstatement.block
+
+
+class bettervalue:
+    rawself: value
+    name: str
+    type: str
+    id: str
+    x: int
+    y: int
+    statements: [betterstatement]
+    next: any
+    values: list  # betterblock
+    top: bool
+
+    def __init__(self,raw:value,block):
+        for i in block.__dict__:
+            self.__setattr__(i,block.__getattribute__(i))
+        self.rawself = raw
+        self.name = raw.name
 
 
 class betterblock:
@@ -83,8 +106,8 @@ class betterblock:
     x: int
     y: int
     statements: [betterstatement]
-    children: list  # betterblock
-    values: list  # betterblock
+    next: any
+    values: [bettervalue]  # betterblock
     top: bool
 
 

@@ -88,17 +88,12 @@ def blocktobetterblock(block):
         for i in block.statement:
             bb.statements.append(betterstatement(i))
     if nextchild:
-        bb.children = []
-        if not block.next.__class__.__name__ == "list":
-            block.next = [block.next]
-        for i in block.next:
-            bb.children.append(blocktobetterblock(i.block))
+        bb.next = blocktobetterblock(block.next.block)
 
     bb.values = []
     if "value" in block.__dict__:
-        if not block.value.__class__.__name__ == "list":
-            block.value = [block.value]
         for i in block.value:
-            bb.values.append(blocktobetterblock(i.block))
+            tempblock = blocktobetterblock(i.block)
+            bb.values.append(bettervalue(i,tempblock))
 
     return bb
