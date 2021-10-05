@@ -1,0 +1,27 @@
+# Dist and package
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+
+# pycache stuff auto-created by pycharm
+__pycache__/
+*.pyc
+
+# mkdocs
+/site
