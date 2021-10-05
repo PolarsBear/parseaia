@@ -56,7 +56,7 @@ This is all of the code from a [`screen`](#class-mainscreen)
 This is a block in the [`code`](#class-codeclassescode) of a [`screen`](#class-mainscreen)
 
 ##### Properties
-* rawself: `codeclasses.block` Very useless raw version of the block, as if it was just the xml in object form
+* rawself: `codeclasses.Base` Very useless raw version of the block, as if it was just the xml in object form
 * type: `str` Type of block
 * id: `str` Unique id of the block
 * x: `int` X position of the block in the editor
@@ -72,7 +72,7 @@ This is a block in the [`code`](#class-codeclassescode) of a [`screen`](#class-m
 This is a value in the [`code`](#class-codeclassescode) of a [`screen`](#class-mainscreen). It also contains the information for a block, since a value has both
 
 ##### Properties
-* rawself: `codeclasses.value` Very useless raw version of the value, as if it was just the xml in object form
+* rawself: `codeclasses.Base` Very useless raw version of the value, as if it was just the xml in object form
 * name: `str` Name of the value
 * type: `str` Type of block
 * id: `str` Unique id of the block
