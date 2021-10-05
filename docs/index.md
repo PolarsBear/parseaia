@@ -43,14 +43,14 @@ This is all of the code from a [`screen`](#class-mainscreen)
 
 ##### Properties
 * xml: `codeclasses.xml`The xml in object form, very RAW, not suggested
-* blockslist [`[betterblock]`](#class-codeclassesbetterblock) A list of all blocks in the [`Screen`](#class-mainscreen), without any sense of hierarchy
-* gvars [`[betterblock]`](#class-codeclassesbetterblock) A list of all global variable declarations
-* events [`[betterblock]`](#class-codeclassesbetterblock) A list of all event handlers
-* procedures [`[betterblock]`](#class-codeclassesbetterblock) A list of all procedure definitions
-* blocks [`[betterblock]`](#class-codeclassesbetterblock) A list of the blocks in the top of the hierarchy (event handlers, global variable declarations, procedure definitions)
-* blocksdict ```[str:[```[`betterblock`](#class-codeclassesbetterblock)```]}``` A dictionary of all blocks, the key is the type of block, and the value is a list of blocks of that type
+* blockslist [`[Block]`](#class-codeclassesblock) A list of all blocks in the [`Screen`](#class-mainscreen), without any sense of hierarchy
+* gvars [`[Block]`](#class-codeclassesblock) A list of all global variable declarations
+* events [`[Block]`](#class-codeclassesblock) A list of all event handlers
+* procedures [`[Block]`](#class-codeclassesblock) A list of all procedure definitions
+* blocks [`[Block]`](#class-codeclassesblock) A list of the blocks in the top of the hierarchy (event handlers, global variable declarations, procedure definitions)
+* blocksdict ```[str:[```[`Block`](#class-codeclassesblock)```]}``` A dictionary of all blocks, the key is the type of block, and the value is a list of blocks of that type
 
-### *class* codeclasses.**betterblock**
+### *class* codeclasses.**Block**
 
 ##### Description
 This is a block in the [`code`](#class-codeclassescode) of a [`screen`](#class-mainscreen)
@@ -61,12 +61,12 @@ This is a block in the [`code`](#class-codeclassescode) of a [`screen`](#class-m
 * id: `str` Unique id of the block
 * x: `int` X position of the block in the editor
 * y: `int` Y position of the block in the editor
-* statements [`betterstatement`](#class-codeclassesbetterstatement) A list of all statements in the block (if/else/for/etc...)
-* next: [`betterblock`](#class-codeclassesbetterblock) The next block in the code, run after this one
-* values [`[bettervalue]`](#class-codeclassesbettervalue) List of values attached to this block
+* statements [`[Statement]`](#class-codeclassesstatement) A list of all statements in the block (if/else/for/etc...)
+* next: [`Block`](#class-codeclassesblock) The next block in the code, run after this one
+* values [`[Value]`](#class-codeclassesvalue) List of values attached to this block
 * top `bool` If this block is at the top of the hierarchy
 
-### *class* codeclasses.**bettervalue**
+### *class* codeclasses.**Value**
 
 ##### Description
 This is a value in the [`code`](#class-codeclassescode) of a [`screen`](#class-mainscreen). It also contains the information for a block, since a value has both
@@ -76,23 +76,23 @@ This is a value in the [`code`](#class-codeclassescode) of a [`screen`](#class-m
 * name: `str` Name of the value
 * type: `str` Type of block
 * id: `str` Unique id of the block
-* x: `int` X position of the block in the editor
-* y: `int` Y position of the block in the editor
-* statements [`betterstatement`](#class-codeclassesbetterstatement) A list of all statements in the block (if/else/for/etc...)
-* next: [`betterblock`](#class-codeclassesbetterblock) The next block in the code, run after this one
-* values [`[bettervalue]`](#class-codeclassesbettervalue) List of values attached to this block
+* x: `int` X position of the block in the editor (reserved for top level blocks)
+* y: `int` Y position of the block in the editor (reserved for top level blocks)
+* statements [`[Statement]`](#class-codeclassesstatement) A list of all statements in the block (if/else/for/etc...)
+* next: [`Block`](#class-codeclassesblock) The next block in the code, run after this one
+* values [`[Value]`](#class-codeclassesvalue) List of values attached to this block
 * top `bool` If this block is at the top of the hierarchy
 
 
-### *class* codeclasses.**betterstatement**
+### *class* codeclasses.**Statement**
 
 ##### Description
 This is a statement in the [`code`](#class-codeclassescode) of a [`screen`](#class-mainscreen)
 
 ##### Properties
-* rawself: `codeclasses.statement` Very useless raw version of the statement, as if it was just the xml in object form
+* rawself: `codeclasses.Base` Very useless raw version of the statement, as if it was just the xml in object form
 * name: `str` Name of the statement
-* next: [`betterblock`](#class-codeclassesbetterblock) The next block in the code, run after this statement
+* next: [`Block`](#class-block) The next block in the code, run after this statement
 
 ### *class* uiclasses.**UI**
 
@@ -117,9 +117,9 @@ Represents the properties of a screen [`UI`](#class-uiclassesui) element from a 
 * AppName: `str` Name of the app
 * Title: `str` Screen's visible name (the one that shows up in that top bar thing)
 * Uuid: `str` A number, the unique id of the screen
-* Components: [`[Components]`](#class-uiclassescomponents) A list of all the UI elements in the screen
+* Components: [`[Component]`](#class-uiclassescomponent) A list of all the UI elements in the screen
 
-### *class* uiclasses.**Components**
+### *class* uiclasses.**Component**
 
 ##### Description
 Represents a Component of a screen [`UI`](#class-uiclassesui) element from a [`screen`](#class-mainscreen). Has many more potential properties than shown here, these are just the default ones, if for example the element's background color is changed, there would be a property to represent that
@@ -129,3 +129,4 @@ Represents a Component of a screen [`UI`](#class-uiclassesui) element from a [`s
 * Type: `str` Type of ui element
 * Version `str` Why App Inventor? why?
 * Uuid: `str` A number, the unique id of the element
+* Components: [`[Component]`](#class-uiclassescomponent) A list of all the UI elements in the component (Not always present)
