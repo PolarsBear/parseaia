@@ -42,7 +42,7 @@ This is a screen from the [`Project`](#class-project), it has the screen's code 
 This is all of the code from a [`screen`](#class-mainscreen)
 
 ##### Properties
-* xml: `codeclasses.xml`The xml in object form, very RAW, not suggested
+* xml: `codeclasses.Base`The xml in object form, very RAW, not suggested
 * blockslist [`[Block]`](#class-codeclassesblock) A list of all blocks in the [`Screen`](#class-mainscreen), without any sense of hierarchy
 * gvars [`[Block]`](#class-codeclassesblock) A list of all global variable declarations
 * events [`[Block]`](#class-codeclassesblock) A list of all event handlers
