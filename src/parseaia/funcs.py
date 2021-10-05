@@ -1,5 +1,4 @@
 import os
-from .dictionaryutils import *
 
 def listBlocks(block):
     gathered_blocks = [block]
@@ -14,3 +13,11 @@ def listBlocks(block):
         for val in block.values:
             gathered_blocks += listBlocks(val)
     return gathered_blocks
+
+def deletedir(fp):
+    for file in os.listdir(fp):
+        if os.path.isdir(f"{fp}/{file}"):
+            deletedir(f"{fp}/{file}")
+        else:
+            os.remove(f"{fp}/{file}")
+    os.rmdir(fp)

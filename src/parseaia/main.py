@@ -1,7 +1,7 @@
 from .codeclasses import Code, Block
 from .uiclasses import UI
-from .funcs import objectfromdict, listBlocks, deletedir
-from .dictionaryutils import readxml, readjson
+from .funcs import listBlocks, deletedir
+from .dictionaryutils import readxml, readjson, objectfromdict
 import os, zipfile
 from PIL import Image
 from time import sleep

@@ -1,14 +1,15 @@
+#encoding: UTF-8
 import xmltodict, json, os
 from .codeclasses import *
 
 def readxml(path):
-    with open(path,"r") as xmlfile:
+    with open(path,"r", encoding="utf-8") as xmlfile:
         xml = xmlfile.read()
         dict = xmltodict.parse(xml)
     return dict
 
 def readjson(path):
-    with open(path,"r") as jsonfile:
+    with open(path,"r", encoding="utf-8") as jsonfile:
         jsond = jsonfile.read()
         jsond = jsond.replace(jsond.split("{")[0],"")
         listy = list(jsond)
@@ -23,15 +24,6 @@ def readjson(path):
 
 def removebadthings(text:str):
     return text.replace("@","").replace("#","").replace("[","").replace("]","").replace("-","_").replace("$","").replace(" ","_")
-
-
-def deletedir(fp):
-    for file in os.listdir(fp):
-        if os.path.isdir(f"{fp}/{file}"):
-            deletedir(f"{fp}/{file}")
-        else:
-            os.remove(f"{fp}/{file}")
-    os.rmdir(fp)
 
 def dictionaryparse(k,d):
     d[k] = objectfromdict(Base, d[k])
