@@ -1,113 +1,117 @@
-class localname:
-    name: str
+class Base:
+    pass
 
 
-class mutation:
-    component_type: str
-    is_generic: str
-    instance_name: str
-    event_name: str
-    localname: localname
-
-
-class field:
+class Field:
     name: str
     text: str
 
+    def __init__(self,raw:Base):
+        self.name = raw.name
+        if "text" in raw.__dict__:
+            self.text = raw.text
+        else:
+            self.text = None
 
-class value:
+
+class Statement:
+    rawself: Base
     name: str
-    block: any  # block
+    next = any
 
-
-class eventparam:
-    name: str
-
-
-class arg:
-    name:str
-
-
-class next:
-    block: any  # block
-
-
-class statement:
-    name: str
-    block: any  # block
-
-
-class block:
-    type: str
-    id: str
-    x: str
-    y: str
-    next: next
-    statement: statement
-    field: field
-    value: value or list
-
-
-class yacodeblocks:
-    ya_version: str
-    language_version: str
-
-
-class xml:
-    xmlns: str
-    block: list
-    yacodeblocks: yacodeblocks
-
-
-class Code:
-    xml: xml
-    blockslist: list
-    gvars: list
-    events: list
-    procedures: list
-    blocks: list
-    blocksdict: dict
-
-
-class betterstatement:
-    rawself: statement
-    name: str
-    next = any  # betterblock
-
-    def __init__(self,rawstatement:statement):
+    def __init__(self,rawstatement:Base):
         self.rawself = rawstatement
         self.name = rawstatement.name
         self.child = rawstatement.block
 
 
-class bettervalue:
-    rawself: value
+class Value:
+    rawself: Base
     name: str
     type: str
     id: str
     x: int
     y: int
-    statements: [betterstatement]
+    statements: [Statement]
     next: any
-    values: list  # betterblock
+    values: list
     top: bool
 
-    def __init__(self,raw:value,block):
+    def __init__(self,raw:Base,block):
         for i in block.__dict__:
             self.__setattr__(i,block.__getattribute__(i))
         self.rawself = raw
         self.name = raw.name
 
 
-class betterblock:
-    rawself: block
+class Block:
+    rawself: Base
     type: str
     id: str
     x: int
     y: int
-    statements: [betterstatement]
+    statements: [Statement]
     next: any
-    values: [bettervalue]  # betterblock
+    values: [Value]
+    fields: [Field]
     top: bool
 
+    def __init__(self,base:Base):
+        self.rawself = base
+        self.type = base.type
+        self.id = base.id
 
+        # Position stuff
+        if "x" in base.__dict__:
+            self.x = int(base.x)
+            self.y = int(base.y)
+            self.top = True
+        else:
+            self.top = False
+            self.x = None
+            self.y = None
+
+        # Add Statements
+        if "statement" in base.__dict__:
+            if base.statement.__class__.__name__ != "list":
+                self.statements = [Statement(base.statement)]
+            else:
+                self.statements = []
+                for state in base.statement:
+                    self.statements.append(Statement(state))
+
+        # Add Next
+        if "next" in base.__dict__:
+            self.next = Block(base.next)
+
+        # Add Values
+        if "value" in base.__dict__:
+            if base.value.__class__.__name__ != "list":
+                self.values = [Value(base.value,Block(base.value.block))]
+            else:
+                self.values = []
+                for val in base.value:
+                    self.values.append(Value(val,Block(val.block)))
+
+        # Add properties from mutations
+        if "mutation" in base.__dict__:
+            for k in base.mutation.__dict__:
+                self.__setattr__(k, base.mutation.__getattribute__(k))
+
+
+        if "field" in base.__dict__:
+            if base.field.__class__.__name__ != "list":
+                base.field = [base.field]
+            self.fields = []
+            for i in base.field:
+                self.fields.append(Field(i))
+
+
+class Code:
+    xml: Base
+    blockslist: [Block]
+    gvars: [Block]
+    events: [Block]
+    procedures: [Block]
+    blocks: [Block]
+    blocksdict: {str:Block}

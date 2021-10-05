@@ -1,7 +1,7 @@
-from .codeclasses import Code
+from .codeclasses import Code, Block
 from .uiclasses import UI
-from .funcs import objectfromdict, getblocks, blocktobetterblock, deletedir
-from .todict import readxml, readjson
+from .funcs import objectfromdict, listBlocks, deletedir
+from .dictionaryutils import readxml, readjson
 import os, zipfile
 from PIL import Image
 from time import sleep
@@ -19,31 +19,28 @@ class Screen:  # Usage: Project("path/to/my/project.aia")
     def getUI(self, scrname, dir):
         dir += scrname + ".scm"
         d = readjson(dir)
-        self.UI = objectfromdict(UI, d)
+        self.UI = UI(d)
 
     def getCode(self, scrname, dir):
         dir += scrname + ".bky"
         d = readxml(dir)
         self.Code = objectfromdict(Code, d)
 
-        topblocks = self.Code.xml.block
+        rawblocks = self.Code.xml.block
         self.Code.gvars = []
         self.Code.events = []
         self.Code.procedures = []
         self.Code.blockslist = []
         self.Code.blocks = []
-        if topblocks.__class__.__name__ != "list":
-            topblocks = [topblocks]
-        for i in topblocks:
-            if i.type == "component_event":
-                self.Code.events.append(i)
-            elif i.type == "global_declaration":
-                self.Code.gvars.append(i)
-            elif i.type == "procedures_defnoreturn":
-                self.Code.procedures.append(i)
 
-            self.Code.blocks.append(blocktobetterblock(i))
-            self.Code.blockslist += getblocks(i)
+
+        if rawblocks.__class__.__name__ != "list":
+            rawblocks = [rawblocks]
+        for i in rawblocks:
+            self.Code.blocks.append(Block(i))
+
+        for i in self.Code.blocks:
+            self.Code.blockslist += listBlocks(i)
 
         self.Code.blocksdict = {}
         for i in self.Code.blockslist:
@@ -51,6 +48,14 @@ class Screen:  # Usage: Project("path/to/my/project.aia")
                 self.Code.blocksdict[i.type].append(i)
             else:
                 self.Code.blocksdict[i.type] = [i]
+
+            # Create Lists of top level blocks
+            if i.type == "component_event":
+                self.Code.events.append(i)
+            elif i.type == "global_declaration":
+                self.Code.gvars.append(i)
+            elif i.type == "procedures_defnoreturn":
+                self.Code.procedures.append(i)
 
 
 class Project:
