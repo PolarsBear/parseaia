@@ -20,9 +20,13 @@ MANIFEST
 
 
 # pycache stuff auto-created by pycharm
-__pycache__/
+src/parseaia/__pycache__/
 *.pyc
 
 # mkdocs
 /site
 *.pyc
+src/parseaia/__pycache__/codeclasses.cpython-38.pyc
+src/parseaia/__pycache__/funcs.cpython-38.pyc
+src/parseaia/__pycache__/main.cpython-38.pyc
+src/parseaia/__pycache__/uiclasses.cpython-38.pyc
