@@ -42,7 +42,7 @@ This is a screen from the [`Project`](#class-project), it has the screen's code 
 This is all of the code from a [`screen`](#class-mainscreen)
 
 ##### Properties
-* xml: `codeclasses.Base`The xml in object form, very RAW, not suggested
+* xml: `codeclasses.Base` Just the xml in object form, doesn't serve any purpose
 * blockslist [`[Block]`](#class-codeclassesblock) A list of all blocks in the [`Screen`](#class-mainscreen), without any sense of hierarchy
 * gvars [`[Block]`](#class-codeclassesblock) A list of all global variable declarations
 * events [`[Block]`](#class-codeclassesblock) A list of all event handlers
@@ -56,7 +56,7 @@ This is all of the code from a [`screen`](#class-mainscreen)
 This is a block in the [`code`](#class-codeclassescode) of a [`screen`](#class-mainscreen)
 
 ##### Properties
-* rawself: `codeclasses.Base` Very useless raw version of the block, as if it was just the xml in object form
+* rawself: `codeclasses.Base` Just the xml in object form, doesn't serve any purpose
 * type: `str` Type of block
 * id: `str` Unique id of the block
 * x: `int` X position of the block in the editor
@@ -72,7 +72,7 @@ This is a block in the [`code`](#class-codeclassescode) of a [`screen`](#class-m
 This is a value in the [`code`](#class-codeclassescode) of a [`screen`](#class-mainscreen). It also contains the information for a block, since a value has both
 
 ##### Properties
-* rawself: `codeclasses.Base` Very useless raw version of the value, as if it was just the xml in object form
+* rawself: `codeclasses.Base` Just the xml in object form, doesn't serve any purpose
 * name: `str` Name of the value
 * type: `str` Type of block
 * id: `str` Unique id of the block
@@ -90,7 +90,7 @@ This is a value in the [`code`](#class-codeclassescode) of a [`screen`](#class-m
 This is a statement in the [`code`](#class-codeclassescode) of a [`screen`](#class-mainscreen)
 
 ##### Properties
-* rawself: `codeclasses.Base` Very useless raw version of the statement, as if it was just the xml in object form
+* rawself: `codeclasses.Base` Just the xml in object form, doesn't serve any purpose
 * name: `str` Name of the statement
 * next: [`Block`](#class-block) The next block in the code, run after this statement
 
@@ -100,6 +100,7 @@ This is a statement in the [`code`](#class-codeclassescode) of a [`screen`](#cla
 Represents the screen UI element from a [`screen`](#class-mainscreen)
 
 ##### Properties
+* rawself: `codeclasses.Base` Just the xml in object form, doesn't serve any purpose
 * authURL: `[str]` Authentication for something
 * YaVersion: `str` A number for the version of some weird thing named Ya
 * Source: `str` Some weird thing
@@ -111,6 +112,7 @@ Represents the screen UI element from a [`screen`](#class-mainscreen)
 Represents the properties of a screen [`UI`](#class-uiclassesui) element from a [`screen`](#class-mainscreen). Has many more potential properties than shown here, these are just the default ones, if for example the screen's background color is changed, there would be a property to represent that
 
 ##### Properties
+* rawself: `codeclasses.Base` Just the xml in object form, doesn't serve any purpose
 * Name: `str` Name of the screen
 * Type: `str` Type of element, can only be "Form"
 * Version: `str` I used to believe that App Inventor's code was actually good...
@@ -125,6 +127,7 @@ Represents the properties of a screen [`UI`](#class-uiclassesui) element from a 
 Represents a Component of a screen [`UI`](#class-uiclassesui) element from a [`screen`](#class-mainscreen). Has many more potential properties than shown here, these are just the default ones, if for example the element's background color is changed, there would be a property to represent that
 
 ##### Properties
+* rawself: `codeclasses.Base` Just the xml in object form, doesn't serve any purpose
 * Name: `str` Name of the ui element (IE: "Button1")
 * Type: `str` Type of ui element
 * Version `str` Why App Inventor? why?
