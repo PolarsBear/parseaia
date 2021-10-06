@@ -7,7 +7,7 @@ def readxml(path):
         xml = xmlfile.read()
         try:
             dict = xmltodict.parse(xml)
-        except:
+        except xmltodict.expat.ExpatError:
             print(f"\033[31mAlert: The screen you'll be alerted about right after this alert has NOTHING in its code XML. Something is VERY wrong!\033[39m")
             return {"xml":Base()}
     return dict
