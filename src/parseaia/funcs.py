@@ -1,4 +1,5 @@
 import os
+from PIL import Image
 
 def listBlocks(block):
     gathered_blocks = [block]
@@ -21,3 +22,19 @@ def deletedir(fp):
         else:
             os.remove(f"{fp}/{file}")
     os.rmdir(fp)
+
+
+def assetparse(obj, assetpath, filename):
+    path = assetpath + filename
+    if not os.path.isdir(path):
+        try:
+            # Madness for disconnecting image from file
+            tmp = Image.open(fp=path)
+            tmp2 = Image.frombytes(tmp.mode, tmp.size, tmp.tobytes())
+            tmp.close()
+            tmp2.filename = filename
+            obj.images.append(tmp2)
+        except:
+            # Not Image, read text
+            with open(path, "r") as asset:
+                obj.assets[filename] = asset.read()

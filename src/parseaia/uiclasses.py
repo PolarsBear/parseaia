@@ -1,5 +1,5 @@
 from .dictionaryutils import objectfromdict
-from .codeclasses import Base
+from .baseclasses import Base
 
 
 class Component:

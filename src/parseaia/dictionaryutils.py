@@ -1,5 +1,5 @@
 import xmltodict, json, os
-from .codeclasses import *
+from .baseclasses import *
 
 def readxml(path):
     with open(path,"r", encoding="utf-8") as xmlfile:

@@ -1,6 +1,6 @@
-from .codeclasses import Code, Block
+from .codeclasses import Code
 from .uiclasses import UI
-from .funcs import listBlocks, deletedir
+from .funcs import deletedir, assetparse
 from .dictionaryutils import readxml, readjson, objectfromdict
 import os, zipfile
 from PIL import Image
@@ -12,103 +12,61 @@ class Screen:  # Usage: Project("path/to/my/project.aia")
     UI: UI
 
     def __init__(self, scrname, dir):
+        dir1, dir2 = dir,dir
 
-        self.getCode(scrname, dir)
-        self.getUI(scrname, dir)
+        # Code
+        dir1 += scrname + ".bky"
+        d = readxml(dir1)
+        self.Code = Code(d, scrname)
 
-    def getUI(self, scrname, dir):
-        dir += scrname + ".scm"
-        d = readjson(dir)
+        # UI
+        dir2 += scrname + ".scm"
+        d = readjson(dir2)
         self.UI = UI(d)
-
-    def getCode(self, scrname, dir):
-        dir += scrname + ".bky"
-        d = readxml(dir)
-        self.Code = objectfromdict(Code, d)
-
-
-        self.Code.gvars = []
-        self.Code.events = []
-        self.Code.procedures = []
-        self.Code.blockslist = []
-        self.Code.blocks = []
-
-        if "block" not in self.Code.xml.__dict__:
-            print(f"\033[33mAlert: {scrname} has no code. Something might be wrong...\033[39m")
-            return
-        rawblocks = self.Code.xml.block
-
-        if rawblocks.__class__.__name__ != "list":
-            rawblocks = [rawblocks]
-        for i in rawblocks:
-            self.Code.blocks.append(Block(i))
-
-        for i in self.Code.blocks:
-            self.Code.blockslist += listBlocks(i)
-
-        self.Code.blocksdict = {}
-        for i in self.Code.blockslist:
-            if i.type in self.Code.blocksdict:
-                self.Code.blocksdict[i.type].append(i)
-            else:
-                self.Code.blocksdict[i.type] = [i]
-
-            # Create Lists of top level blocks
-            if i.type == "component_event":
-                self.Code.events.append(i)
-            elif i.type == "global_declaration":
-                self.Code.gvars.append(i)
-            elif i.type == "procedures_defnoreturn":
-                self.Code.procedures.append(i)
-
 
 class Project:
     screens: [Screen]
     images: [Image.Image]
     assets: {str:str}
+    parse_function: any # Function that can be set as a way for other parsing methods to be available if need be
 
-    def __init__(self, fp, tempfolderfp="parseaiatemp"):
+    def __init__(self, fp, tempfp="parseaiatemp", parse_function=assetparse):
+        self.parse_function = parse_function
+        self.tempfp = tempfp
         self.screens = []
         self.images = []
         self.assets = {}
-        if not os.path.isdir(tempfolderfp):
-            os.mkdir(tempfolderfp)
+        if not os.path.isdir(tempfp):
+            os.mkdir(tempfp)
         else:
-            deletedir(tempfolderfp)
-            os.mkdir(tempfolderfp)
+            deletedir(tempfp)
+            os.mkdir(tempfp)
 
         with zipfile.PyZipFile(fp) as zipf:
-            zipf.extractall(tempfolderfp)
+            zipf.extractall(tempfp)
 
-        d1 = os.listdir(f"{tempfolderfp}/src/appinventor")[0]
-        d2 = os.listdir(f"{tempfolderfp}/src/appinventor/{d1}")[0]
-        dir = f"{tempfolderfp}/src/appinventor/{d1}/{d2}/"
+        d1 = os.listdir(f"{tempfp}/src/appinventor")[0]
+        d2 = os.listdir(f"{tempfp}/src/appinventor/{d1}")[0]
+        dir = f"{tempfp}/src/appinventor/{d1}/{d2}/"
         for i in os.listdir(dir):
             if i.endswith(".bky"):
                 scr = Screen(i.replace(".bky", "", 1), dir)
                 self.__setattr__(i.replace(".bky", "", 1), scr)
                 self.screens.append(scr)
 
-        self.getAssets(tempfolderfp)
 
-        deletedir(tempfolderfp)
-
-    def getAssets(self, dir):
-        path = dir + "/assets/"
-        if not os.path.exists(path):
+        # Get assets
+        assetpath = tempfp + "/assets/"
+        if not os.path.exists(assetpath):
             return
-        for i in os.listdir(path):
-            if not os.path.isdir(path + i):
-                try:
-                    # Madness for disconnecting image from file
-                    tmp = Image.open(fp=path + i)
-                    tmp2 = Image.frombytes(tmp.mode,tmp.size,tmp.tobytes())
-                    tmp.close()
-                    tmp2.filename = i
-                    self.images.append(tmp2)
+        if "parse_function" in self.__dict__:
+            if self.parse_function.__code__.co_argcount != 3:
+                print(f'''\033[31mAlert: parse_function "{self.parse_function.__name__}" has {"less" if self.parse_function.__code__.co_argcount < 3 else "more"} than 3 arguments. It won't be called!\033[39m''')
+        for i in os.listdir(assetpath):
+            if self.parse_function.__code__.co_argcount == 3:  # Checking if parse function has 3 arguments (self, assetpath, filename)
+                self.parse_function(self, assetpath,i)
 
-                except:
-                    # Not Image, read text
-                    with open(path+i,"r") as asset:
-                        self.assets[i] = asset.read()
+        # Delete temp folder and contents
+        deletedir(tempfp)
+
 

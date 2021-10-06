@@ -1,6 +1,6 @@
-class Base:
-    pass
-
+from .funcs import listBlocks
+from .baseclasses import Base
+from .dictionaryutils import objectfromdict
 
 class Field:
     name: str
@@ -67,7 +67,7 @@ class Block:
                 self.x = int(base.x)
                 self.y = int(base.y)
             except ValueError:
-                print(f'\033[31mError: block of type "{self.type}" with id of "{self.id}" has unexpected x and y values of "{base.x}" and "{base.y}" respectively. Something is VERY wrong!\033[39m')
+                print(f'\033[31mAlert: block of type "{self.type}" with id of "{self.id}" has unexpected x and y values of "{base.x}" and "{base.y}" respectively. Something is VERY wrong!\033[39m')
             self.top = True
         else:
             self.top = False
@@ -111,6 +111,7 @@ class Block:
 
 
 class Code:
+    rawself: Base
     xml: Base
     blockslist: [Block]
     gvars: [Block]
@@ -118,3 +119,43 @@ class Code:
     procedures: [Block]
     blocks: [Block]
     blocksdict: {str:Block}
+
+    def __init__(self, dictionary, scrname):
+        self.rawself = objectfromdict(Base, dictionary)
+
+        for i in self.rawself.__dict__:
+            self.__setattr__(i,self.rawself.__getattribute__(i))
+
+        self.gvars = []
+        self.events = []
+        self.procedures = []
+        self.blockslist = []
+        self.blocks = []
+
+        if "block" not in self.xml.__dict__:
+            print(f"\033[33mAlert: {scrname} has no code. Something might be wrong...\033[39m")
+            return
+        rawblocks = self.xml.block
+
+        if rawblocks.__class__.__name__ != "list":
+            rawblocks = [rawblocks]
+        for i in rawblocks:
+            self.blocks.append(Block(i))
+
+        for i in self.blocks:
+            self.blockslist += listBlocks(i)
+
+        self.blocksdict = {}
+        for i in self.blockslist:
+            if i.type in self.blocksdict:
+                self.blocksdict[i.type].append(i)
+            else:
+                self.blocksdict[i.type] = [i]
+
+            # Create Lists of top level blocks
+            if i.type == "component_event":
+                self.events.append(i)
+            elif i.type == "global_declaration":
+                self.gvars.append(i)
+            elif i.type == "procedures_defnoreturn":
+                self.procedures.append(i)
