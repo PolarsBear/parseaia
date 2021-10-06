@@ -6,12 +6,12 @@ ParseAIA is a simple python library for extracting data from .aia files ([App In
 The library works by extracting all of the data from an app inventor project. The one class you'll need is [`Project`](#class-project), it represents one app inventor project.
 
 #### Quick Example:
-```py
+```python
 from parseaia import Project
 
-myproj = Project("ExampleApp.aia") # Initiate a Project with the filepath to the .aia
+myProject = Project("ExampleApp.aia") # Initiate a Project with the filepath to the .aia
 
-print(myproj.Screen1.UI.Properties.Components) # Printing out all the UI elements
+print(myProject.Screen1.UI.Properties.Components) # Printing out all the UI elements
 ```
 This example prints out all the UI elements in the screen "Screen1" (The default screen name when you create an app in app inventor, most apps will have it)
 
@@ -26,6 +26,7 @@ Every [`Screen`](#class-mainscreen) in the project is a property of this class, 
 * screens: [`[Screen]`](#class-mainscreen) A list of screens, each holding its own [`Code`](#class-codeclassescode) and [`UI`](#class-uiclassesui)
 * images: [`[PIL.Image.Image]`](https://pillow.readthedocs.io/en/stable/reference/Image.html#the-image-class) A list of all the images extracted from the project, on top of all the properties from Pillow, they also have `filename`, which is their original filename, as a string
 * assets: `{str:str}` A dictionary of all the non-image assets, the keys are the filenames, and the values are the text in their files
+* parse_function: `function` Used for extracting assets from the .aia, can be customised
 
 ### *class* main.**Screen**
 
@@ -42,7 +43,8 @@ This is a screen from the [`Project`](#class-project), it has the screen's code 
 This is all of the code from a [`screen`](#class-mainscreen)
 
 ##### Properties
-* xml: `codeclasses.Base` Just the xml in object form, doesn't serve any purpose
+* rawself: `codeclasses.Base` Just the xml in object form, doesn't serve any purpose
+* xml: `codeclasses.Base` Just the xml in object form, but this holds a bit of extra data I haven't transferred yet
 * blockslist [`[Block]`](#class-codeclassesblock) A list of all blocks in the [`Screen`](#class-mainscreen), without any sense of hierarchy
 * gvars [`[Block]`](#class-codeclassesblock) A list of all global variable declarations
 * events [`[Block]`](#class-codeclassesblock) A list of all event handlers
@@ -133,3 +135,31 @@ Represents a Component of a screen [`UI`](#class-uiclassesui) element from a [`s
 * Version `str` Why App Inventor? why?
 * Uuid: `str` A number, the unique id of the element
 * Components: [`[Component]`](#class-uiclassescomponent) A list of all the UI elements in the component (Not always present)
+
+
+## Custom Parsing
+
+### Explanation
+If you have assets that can't be properly parsed just by reading or that aren't images, 
+then this might help with your problem. You can use the `parse_function` keyword argument 
+when creating a new project to set how every asset will be parsed.
+
+Just create a parsing function, it can be called anything, and do anything as
+long as it has three arguments, those being: 
+* The project, the object you will modifiy to
+add the results from the parsing
+* The base asset path, the path to where all the assets are
+kept
+* The filename, the name of the file inside of the asset path you are currently parsing
+
+#### Example
+```python
+import parseaia
+
+
+def myparsefunction(project, assetpath, filename):  # Create a function for parsing
+    print(assetpath + filename)  # This one just places all the paths in the assets dictionary
+
+myProject = parseaia.Project("Example.aia", parse_function=myparsefunction)  # Use the function when creating a project
+```
+
