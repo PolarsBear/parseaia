@@ -37,9 +37,9 @@ class Properties:
         for i in raw.__dict__:
             self.__setattr__(i,raw.__getattribute__(i))
 
+        self.Components = []
         # Add Components
         if "Components" in raw.__dict__:
-            self.Components = []
             if raw.Components.__class__.__name__ != "list":
                 raw.Components = [raw.Components]
 
