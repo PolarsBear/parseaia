@@ -159,7 +159,7 @@ import parseaia
 
 
 def myparsefunction(project, assetpath, filename):  # Create a function for parsing
-    print(assetpath + filename)  # This one just places all the paths in the assets dictionary
+    print(assetpath + filename)  # This one just prints all the filepaths
 
 myProject = parseaia.Project("Example.aia", parse_function=myparsefunction)  # Use the function when creating a project
 ```
