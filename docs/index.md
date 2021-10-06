@@ -26,7 +26,7 @@ Every [`Screen`](#class-mainscreen) in the project is a property of this class, 
 * screens: [`[Screen]`](#class-mainscreen) A list of screens, each holding its own [`Code`](#class-codeclassescode) and [`UI`](#class-uiclassesui)
 * images: [`[PIL.Image.Image]`](https://pillow.readthedocs.io/en/stable/reference/Image.html#the-image-class) A list of all the images extracted from the project, on top of all the properties from Pillow, they also have `filename`, which is their original filename, as a string
 * assets: `{str:str}` A dictionary of all the non-image assets, the keys are the filenames, and the values are the text in their files
-* parse_function: `function` Used for extracting assets from the .aia, can be customised
+* parse_function: `function` Used for extracting assets from the .aia, can be customised, see [Custom Parsing](#custom-parsing)
 
 ### *class* main.**Screen**
 
@@ -43,9 +43,9 @@ This is a screen from the [`Project`](#class-project), it has the screen's code 
 This is all of the code from a [`screen`](#class-mainscreen)
 
 ##### Properties
-* rawself: `codeclasses.Base` Just the xml in object form, doesn't serve any purpose
-* xml: `codeclasses.Base` Just the xml in object form, but this holds a bit of extra data I haven't transferred yet
-* blockslist [`[Block]`](#class-codeclassesblock) A list of all blocks in the [`Screen`](#class-mainscreen), without any sense of hierarchy
+* xmlns: `str` XML... something? It's a url to W3Schools
+* yacodeblocks `baseclasses.Base` Some versions extracted from the .aia
+* blockslist [`[Block]`](#class-codeclassesblock) A list of all blocks in the [`Screen`](#class-mainscreen), without any hierarchy
 * gvars [`[Block]`](#class-codeclassesblock) A list of all global variable declarations
 * events [`[Block]`](#class-codeclassesblock) A list of all event handlers
 * procedures [`[Block]`](#class-codeclassesblock) A list of all procedure definitions
@@ -58,7 +58,6 @@ This is all of the code from a [`screen`](#class-mainscreen)
 This is a block in the [`code`](#class-codeclassescode) of a [`screen`](#class-mainscreen)
 
 ##### Properties
-* rawself: `codeclasses.Base` Just the xml in object form, doesn't serve any purpose
 * type: `str` Type of block
 * id: `str` Unique id of the block
 * x: `int` X position of the block in the editor
@@ -74,7 +73,6 @@ This is a block in the [`code`](#class-codeclassescode) of a [`screen`](#class-m
 This is a value in the [`code`](#class-codeclassescode) of a [`screen`](#class-mainscreen). It also contains the information for a block, since a value has both
 
 ##### Properties
-* rawself: `codeclasses.Base` Just the xml in object form, doesn't serve any purpose
 * name: `str` Name of the value
 * type: `str` Type of block
 * id: `str` Unique id of the block
@@ -92,7 +90,6 @@ This is a value in the [`code`](#class-codeclassescode) of a [`screen`](#class-m
 This is a statement in the [`code`](#class-codeclassescode) of a [`screen`](#class-mainscreen)
 
 ##### Properties
-* rawself: `codeclasses.Base` Just the xml in object form, doesn't serve any purpose
 * name: `str` Name of the statement
 * next: [`Block`](#class-block) The next block in the code, run after this statement
 
@@ -102,7 +99,6 @@ This is a statement in the [`code`](#class-codeclassescode) of a [`screen`](#cla
 Represents the screen UI element from a [`screen`](#class-mainscreen)
 
 ##### Properties
-* rawself: `codeclasses.Base` Just the xml in object form, doesn't serve any purpose
 * authURL: `[str]` Authentication for something
 * YaVersion: `str` A number for the version of some weird thing named Ya
 * Source: `str` Some weird thing
@@ -114,7 +110,6 @@ Represents the screen UI element from a [`screen`](#class-mainscreen)
 Represents the properties of a screen [`UI`](#class-uiclassesui) element from a [`screen`](#class-mainscreen). Has many more potential properties than shown here, these are just the default ones, if for example the screen's background color is changed, there would be a property to represent that
 
 ##### Properties
-* rawself: `codeclasses.Base` Just the xml in object form, doesn't serve any purpose
 * Name: `str` Name of the screen
 * Type: `str` Type of element, can only be "Form"
 * Version: `str` I used to believe that App Inventor's code was actually good...
@@ -129,7 +124,6 @@ Represents the properties of a screen [`UI`](#class-uiclassesui) element from a 
 Represents a Component of a screen [`UI`](#class-uiclassesui) element from a [`screen`](#class-mainscreen). Has many more potential properties than shown here, these are just the default ones, if for example the element's background color is changed, there would be a property to represent that
 
 ##### Properties
-* rawself: `codeclasses.Base` Just the xml in object form, doesn't serve any purpose
 * Name: `str` Name of the ui element (IE: "Button1")
 * Type: `str` Type of ui element
 * Version `str` Why App Inventor? why?

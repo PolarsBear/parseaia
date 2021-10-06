@@ -3,14 +3,12 @@ from .baseclasses import Base
 
 
 class Component:
-    rawself: Base
     Name: str
     Type: str
     Version: int
     Uuid: int
 
     def __init__(self, raw:Base):
-        self.rawself = raw
 
         for i in raw.__dict__:
             self.__setattr__(i,raw.__getattribute__(i))
@@ -27,7 +25,6 @@ class Component:
 
 
 class Properties:
-    rawself: Base
     Name: str
     Type: str
     Version: int
@@ -37,8 +34,6 @@ class Properties:
     Components: [Component]
 
     def __init__(self,raw:Base):
-        self.rawself = raw
-
         for i in raw.__dict__:
             self.__setattr__(i,raw.__getattribute__(i))
 
@@ -56,16 +51,15 @@ class Properties:
 
 
 class UI:
-    rawself: Base
     authURL: [str]
     YaVersion: int
     Source: str
     Properties: Properties
 
     def __init__(self,d:dict):
-        self.rawself = objectfromdict(Base,d)
-        for i in self.rawself.__dict__:
-            self.__setattr__(i,self.rawself.__getattribute__(i))
+        rawself = objectfromdict(Base,d)
+        for i in rawself.__dict__:
+            self.__setattr__(i,rawself.__getattribute__(i))
 
         # Add Properties
-        self.Properties = Properties(self.rawself.Properties)
+        self.Properties = Properties(rawself.Properties)

@@ -1,11 +1,17 @@
 import xmltodict, json, os
 from .baseclasses import *
 
+
 def readxml(path):
     with open(path,"r", encoding="utf-8") as xmlfile:
         xml = xmlfile.read()
-        dict = xmltodict.parse(xml)
+        try:
+            dict = xmltodict.parse(xml)
+        except:
+            print(f"\033[31mAlert: The screen you'll be alerted about right after this alert has NOTHING in its code XML. Something is VERY wrong!\033[39m")
+            return {"xml":Base()}
     return dict
+
 
 def readjson(path):
     with open(path,"r", encoding="utf-8") as jsonfile:
@@ -21,8 +27,10 @@ def readjson(path):
         dict = json.loads(jsond)
     return dict
 
+
 def removebadthings(text:str):
     return text.replace("@","").replace("#","").replace("[","").replace("]","").replace("-","_").replace("$","").replace(" ","_")
+
 
 def objectfromdict(c,d):
     # Usage: obj = objectfromdict(class,dictionary)

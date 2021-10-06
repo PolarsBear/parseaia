@@ -15,18 +15,15 @@ class Field:
 
 
 class Statement:
-    rawself: Base
     name: str
     next = any
 
     def __init__(self,rawstatement:Base):
-        self.rawself = rawstatement
         self.name = rawstatement.name
         self.child = rawstatement.block
 
 
 class Value:
-    rawself: Base
     name: str
     type: str
     id: str
@@ -40,12 +37,10 @@ class Value:
     def __init__(self,raw:Base,block):
         for i in block.__dict__:
             self.__setattr__(i,block.__getattribute__(i))
-        self.rawself = raw
         self.name = raw.name
 
 
 class Block:
-    rawself: Base
     type: str
     id: str
     x: int
@@ -57,7 +52,6 @@ class Block:
     top: bool
 
     def __init__(self,base:Base):
-        self.rawself = base
         self.type = base.type
         self.id = base.id
 
@@ -111,31 +105,32 @@ class Block:
 
 
 class Code:
-    rawself: Base
-    xml: Base
+    yacodeblocks: Base
+    xmlns: str
     blockslist: [Block]
-    gvars: [Block]
+    global_vars: [Block]
     events: [Block]
     procedures: [Block]
     blocks: [Block]
     blocksdict: {str:Block}
 
     def __init__(self, dictionary, scrname):
-        self.rawself = objectfromdict(Base, dictionary)
+        rawself = objectfromdict(Base, dictionary)
 
-        for i in self.rawself.__dict__:
-            self.__setattr__(i,self.rawself.__getattribute__(i))
+        for i in rawself.xml.__dict__:
+            if i != "block":
+                self.__setattr__(i,rawself.xml.__getattribute__(i))
 
-        self.gvars = []
+        self.global_vars = []
         self.events = []
         self.procedures = []
         self.blockslist = []
         self.blocks = []
 
-        if "block" not in self.xml.__dict__:
+        if "block" not in rawself.xml.__dict__:
             print(f"\033[33mAlert: {scrname} has no code. Something might be wrong...\033[39m")
             return
-        rawblocks = self.xml.block
+        rawblocks = rawself.xml.block
 
         if rawblocks.__class__.__name__ != "list":
             rawblocks = [rawblocks]
@@ -156,6 +151,6 @@ class Code:
             if i.type == "component_event":
                 self.events.append(i)
             elif i.type == "global_declaration":
-                self.gvars.append(i)
+                self.global_vars.append(i)
             elif i.type == "procedures_defnoreturn":
                 self.procedures.append(i)
