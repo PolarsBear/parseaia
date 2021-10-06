@@ -146,6 +146,7 @@ when creating a new project to set how every asset will be parsed.
 
 Just create a parsing function, it can be called anything, and do anything as
 long as it has three arguments, those being: 
+
 * The project, the object you will modifiy to
 add the results from the parsing
 * The base asset path, the path to where all the assets are
