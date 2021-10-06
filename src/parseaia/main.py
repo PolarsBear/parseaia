@@ -26,13 +26,17 @@ class Screen:  # Usage: Project("path/to/my/project.aia")
         d = readxml(dir)
         self.Code = objectfromdict(Code, d)
 
-        rawblocks = self.Code.xml.block
+
         self.Code.gvars = []
         self.Code.events = []
         self.Code.procedures = []
         self.Code.blockslist = []
         self.Code.blocks = []
 
+        if "block" not in self.Code.xml.__dict__:
+            print(f"\033[33mAlert: {scrname} has no code. Something might be wrong...\033[39m")
+            return
+        rawblocks = self.Code.xml.block
 
         if rawblocks.__class__.__name__ != "list":
             rawblocks = [rawblocks]
@@ -91,6 +95,8 @@ class Project:
 
     def getAssets(self, dir):
         path = dir + "/assets/"
+        if not os.path.exists(path):
+            return
         for i in os.listdir(path):
             if not os.path.isdir(path + i):
                 try:

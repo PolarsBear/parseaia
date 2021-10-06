@@ -1,4 +1,3 @@
-#encoding: UTF-8
 import xmltodict, json, os
 from .codeclasses import *
 
@@ -25,27 +24,19 @@ def readjson(path):
 def removebadthings(text:str):
     return text.replace("@","").replace("#","").replace("[","").replace("]","").replace("-","_").replace("$","").replace(" ","_")
 
-def dictionaryparse(k,d):
-    d[k] = objectfromdict(Base, d[k])
-
-
-def listparse(n,ogd,d):
-    if d.__class__.__name__ == "dict" or d.__class__.__name__ == "OrderedDict":
-        ogd[n].append(objectfromdict(Base,d))
-    else:
-        ogd[n].append(d)
-
-
 def objectfromdict(c,d):
     # Usage: obj = objectfromdict(class,dictionary)
     obj = c()
     for k in d:
         if d[k].__class__.__name__ == "dict" or d[k].__class__.__name__ == "OrderedDict":
-            dictionaryparse(k,d)
+            d[k] = objectfromdict(Base, d[k])
         elif d[k].__class__.__name__ == "list":
             l = d[k]
             d[k] = []
             for i in l:
-                listparse(k,d,i)
+                if i.__class__.__name__ == "dict" or i.__class__.__name__ == "OrderedDict":
+                    d[k].append(objectfromdict(Base, i))
+                else:
+                    d[k].append(i)
         setattr(obj,removebadthings(k),d[k])
     return obj

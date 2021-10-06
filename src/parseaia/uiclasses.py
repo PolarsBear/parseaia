@@ -50,6 +50,8 @@ class Properties:
 
             for component in raw.Components:
                 self.Components.append(Component(component))
+        else:
+            print(f"\033[33mAlert: {self.Name} has no ui elements. Something might be wrong...\033[39m")
 
 
 

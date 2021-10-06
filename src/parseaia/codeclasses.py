@@ -63,8 +63,11 @@ class Block:
 
         # Position stuff
         if "x" in base.__dict__:
-            self.x = int(base.x)
-            self.y = int(base.y)
+            try:
+                self.x = int(base.x)
+                self.y = int(base.y)
+            except ValueError:
+                print(f'\033[31mError: block of type "{self.type}" with id of "{self.id}" has unexpected x and y values of "{base.x}" and "{base.y}" respectively. Something is VERY wrong!\033[39m')
             self.top = True
         else:
             self.top = False
