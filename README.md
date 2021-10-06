@@ -16,7 +16,7 @@ This example prints out all the UI elements in the screen "Screen1" (The default
 
 # TODO
 
-- Add a better method for extracting non-image assets
+- Add some more error catching
 
 # Documentation
 You can find the documentation [HERE](https://parseaia.readthedocs.io/en/latest/)
