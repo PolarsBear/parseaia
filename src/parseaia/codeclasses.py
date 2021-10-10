@@ -1,5 +1,5 @@
 from .funcs import listBlocks
-from .baseclasses import Base
+from .otherclasses import Base
 from .dictionaryutils import objectfromdict
 
 class Field:

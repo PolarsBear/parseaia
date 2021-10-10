@@ -1,5 +1,5 @@
 import xmltodict, json, os
-from .baseclasses import *
+from .otherclasses import *
 
 
 def readxml(path):
