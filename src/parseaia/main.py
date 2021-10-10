@@ -1,10 +1,13 @@
+import os
+import zipfile
+
+from PIL import Image
+
 from .codeclasses import Code
-from .uiclasses import UI
+from .dictionaryutils import readxml, readjson
 from .funcs import deletedir, assetparse
-from .dictionaryutils import readxml, readjson, objectfromdict
-import os, zipfile
-from PIL import Image, ImageFont
-from time import sleep
+from .otherclasses import Font
+from .uiclasses import UI
 
 
 class Screen:  # Usage: Project("path/to/my/project.aia")
@@ -24,10 +27,11 @@ class Screen:  # Usage: Project("path/to/my/project.aia")
         d = readjson(dir2)
         self.UI = UI(d)
 
+
 class Project:
     screens: [Screen]
     images: [Image.Image]
-    fonts: [ImageFont.ImageFont]
+    fonts: [Font]
     assets: {str:str}
     parse_function: any # Function that can be set as a way for other parsing methods to be available if need be
 
