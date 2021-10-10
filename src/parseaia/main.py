@@ -36,6 +36,7 @@ class Project:
         self.tempfp = tempfp
         self.screens = []
         self.images = []
+        self.fonts = []
         self.assets = {}
         if not os.path.isdir(tempfp):
             os.mkdir(tempfp)
