@@ -52,6 +52,8 @@ class Block:
     top: bool
 
     def __init__(self,base:Base):
+        if "block" in base.__dict__:
+            base = base.block
         self.type = base.type
         self.id = base.id
 
@@ -116,7 +118,12 @@ class Code:
 
     def __init__(self, dictionary, scrname):
         rawself = objectfromdict(Base, dictionary)
-
+        if "block" not in rawself.xml.__dict__:
+            if "nothing" in rawself.xml.__dict__:
+                print(f"\033[31mAlert: Screen {scrname} has NOTHING in its code XML. Something might be wrong...\033[39m")
+                delattr(rawself.xml,"nothing")
+            else:
+                print(f"\033[33mAlert: Screen {scrname} has no code. Something might be wrong...\033[39m")
         for i in rawself.xml.__dict__:
             if i != "block":
                 self.__setattr__(i,rawself.xml.__getattribute__(i))
@@ -128,7 +135,6 @@ class Code:
         self.blocks = []
 
         if "block" not in rawself.xml.__dict__:
-            print(f"\033[33mAlert: {scrname} has no code. Something might be wrong...\033[39m")
             return
         rawblocks = rawself.xml.block
 
