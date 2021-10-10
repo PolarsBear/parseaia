@@ -3,7 +3,7 @@ from .uiclasses import UI
 from .funcs import deletedir, assetparse
 from .dictionaryutils import readxml, readjson, objectfromdict
 import os, zipfile
-from PIL import Image
+from PIL import Image, ImageFont
 from time import sleep
 
 
@@ -27,6 +27,7 @@ class Screen:  # Usage: Project("path/to/my/project.aia")
 class Project:
     screens: [Screen]
     images: [Image.Image]
+    fonts: [ImageFont.ImageFont]
     assets: {str:str}
     parse_function: any # Function that can be set as a way for other parsing methods to be available if need be
 

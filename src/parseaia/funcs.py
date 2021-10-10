@@ -1,5 +1,5 @@
 import os
-from PIL import Image
+from PIL import Image, ImageFont
 
 def listBlocks(block):
     gathered_blocks = [block]
@@ -35,6 +35,15 @@ def assetparse(obj, assetpath, filename):
             tmp2.filename = filename
             obj.images.append(tmp2)
         except:
-            # Not Image, read text
-            with open(path, "r") as asset:
-                obj.assets[filename] = asset.read()
+            if filename.endswith(".ttf"):
+                tmp = ImageFont.truetype(path)
+                tmp.filename = filename
+                obj.fonts.append(tmp)
+            elif filename.endswith(".pil"):
+                tmp = ImageFont.load(path)
+                tmp.filename = filename
+                obj.fonts.append(tmp)
+            else:
+                # Not Image or Font, read text
+                with open(path, "r", encoding="UTF-8") as asset:
+                    obj.assets[filename] = asset.read()
