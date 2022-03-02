@@ -1,5 +1,6 @@
 import os
 import zipfile
+import logging
 
 from PIL import Image
 
@@ -9,6 +10,7 @@ from .funcs import deletedir, assetparse
 from .otherclasses import Font
 from .uiclasses import UI
 
+logger = logging.getLogger(__name__)
 
 class Screen:  # Usage: Project("path/to/my/project.aia")
     Code: Code
@@ -41,6 +43,7 @@ class Project:
         self.screens = []
         self.images = []
         self.fonts = []
+        self.audio = []
         self.assets = {}
         if not os.path.isdir(tempfp):
             os.mkdir(tempfp)

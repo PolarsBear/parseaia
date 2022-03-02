@@ -1,6 +1,10 @@
 import os
 from .otherclasses import Font
+from .otherclasses import Audio
 from PIL import Image
+
+import logging
+logger = logging.getLogger(__name__)
 
 def listBlocks(block):
     gathered_blocks = [block]
@@ -39,7 +43,13 @@ def assetparse(obj, assetpath, filename):
             if filename.endswith("ttf") or filename.endswith("pil"):
                 # Is a font
                 obj.fonts.append(Font(path,filename))
+            elif filename.endswith("wav") or filename.endswith("mp3"):
+                # Is a audio file
+                # TODO: include formats from
+                # https://developer.android.com/guide/topics/media/media-formats
+                logger.debug('Audio full filename: %s', path)
+                obj.audio.append(Audio(path,filename))
             else:
-                # Not Image or Font, read text
+                # Not Image, Font or Audio, assuming it is text
                 with open(path, "r", encoding="UTF-8") as asset:
                     obj.assets[filename] = asset.read()
