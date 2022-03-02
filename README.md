@@ -1,5 +1,5 @@
 # Parse .AIA
-This is a simple python library for extracting code, UI data, images and assets from .AIA files ([App Inventor](https://appinventor.mit.edu/) Projects).
+This is a python library for extracting code, UI data, images and assets from .AIA files ([App Inventor](https://appinventor.mit.edu/) Projects).
 
 # Basic Explanation
 The library works by extracting all of the data from an app inventor project. The one class you'll need is `parseaia.Project`, it represents one app inventor project.
