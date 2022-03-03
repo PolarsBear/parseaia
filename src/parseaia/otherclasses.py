@@ -45,7 +45,6 @@ class Font:
 # Hold info about audio assets. At the moment, not interested in the
 # content of the audio file, only checking if it looks valid
 class Audio:
-    filepath: str
     filename: str
     _data = numpy.ndarray
     sampling_rate: int
@@ -54,7 +53,6 @@ class Audio:
     samples: int
 
     def __init__(self, filepath, filename):
-        self.filepath = filepath
         self.filename = filename
         self._data, self.sampling_rate = librosa.load(filepath, mono=False)
         # For some reason librosa has the "convert to mono" option True by default, so we have to disable it manually
