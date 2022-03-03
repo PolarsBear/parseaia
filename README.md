@@ -23,6 +23,8 @@ You'll need PyQt5 to run it:
 Then you can run:
 `python -m parseaia`
 
+To open a file, just press File>Open and then select the .aia you want to open
+
 # TODO
 
 - Add some more error catching
