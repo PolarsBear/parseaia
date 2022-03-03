@@ -4,26 +4,29 @@ from .otherclasses import Audio
 from PIL import Image
 
 import logging
+
 logger = logging.getLogger(__name__)
 
-def listBlocks(block):
+
+def list_blocks(block):
     gathered_blocks = [block]
     if "next" in block.__dict__:
         if "next" in block.__dict__:
-            gathered_blocks += listBlocks(block.next)
+            gathered_blocks += list_blocks(block.next)
     if "statements" in block.__dict__:
         for state in block.statements:
             if "next" in state.__dict__:
-                gathered_blocks += listBlocks(state.next)
+                gathered_blocks += list_blocks(state.next)
     if "values" in block.__dict__:
         for val in block.values:
-            gathered_blocks += listBlocks(val)
+            gathered_blocks += list_blocks(val)
     return gathered_blocks
 
-def deletedir(fp):
+
+def delete_dir(fp):
     for file in os.listdir(fp):
         if os.path.isdir(f"{fp}/{file}"):
-            deletedir(f"{fp}/{file}")
+            delete_dir(f"{fp}/{file}")
         else:
             os.remove(f"{fp}/{file}")
     os.rmdir(fp)
@@ -42,14 +45,14 @@ def assetparse(obj, assetpath, filename):
         except:
             if filename.endswith("ttf") or filename.endswith("pil"):
                 # Is a font
-                obj.fonts.append(Font(path,filename))
+                obj.fonts.append(Font(path, filename))
             elif filename.endswith("wav") or filename.endswith("mp3"):
-                # Is a audio file
-                # TODO: include formats from
-                # https://developer.android.com/guide/topics/media/media-formats
+                # Is an audio file
                 logger.debug('Audio full filename: %s', path)
-                obj.audio.append(Audio(path,filename))
+                obj.audio.append(Audio(path, filename))
             else:
                 # Not Image, Font or Audio, assuming it is text
                 with open(path, "r", encoding="UTF-8") as asset:
                     obj.assets[filename] = asset.read()
+
+            # This is an if else nightmare, I wish python had a switch keyword
