@@ -1,4 +1,4 @@
-ver = "0.3.3"
+ver = "0.3.4"
 import setuptools, os
 
 print(os.listdir("./"))
