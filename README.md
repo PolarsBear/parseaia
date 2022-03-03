@@ -17,6 +17,8 @@ This example prints out all the UI elements in the screen "Screen1" (The default
 # TODO
 
 - Add some more error catching
+- Add support for video files
+- Create `__main__`
 
 # Links
 - [Documentation](https://parseaia.readthedocs.io/en/latest/)
