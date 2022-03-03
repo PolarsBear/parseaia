@@ -25,6 +25,7 @@ Every [`Screen`](#class-mainscreen) in the project is a property of this class, 
 ##### Properties
 * screens: [`[Screen]`](#class-mainscreen) A list of screens, each holding its own [`Code`](#class-codeclassescode) and [`UI`](#class-uiclassesui)
 * images: [`[PIL.Image.Image]`](https://pillow.readthedocs.io/en/stable/reference/Image.html#the-image-class) A list of all the images extracted from the project, on top of all the properties from Pillow, they also have `filename`, which is their original filename, as a string
+* audio: [`[Audio]`](#class-audio) A list of all the audio files extracted from the project
 * assets: `{str:str}` A dictionary of all the non-image assets, the keys are the filenames, and the values are the text in their files
 * parse_function: `function` Used for extracting assets from the .aia, can be customised, see [Custom Parsing](#custom-parsing)
 
@@ -129,6 +130,18 @@ Represents a Component of a screen [`UI`](#class-uiclassesui) element from a [`s
 * Version `str` Why App Inventor? why?
 * Uuid: `str` A number, the unique id of the element
 * Components: [`[Component]`](#class-uiclassescomponent) A list of all the UI elements in the component (Not always present)
+
+### *class* **Audio**
+
+##### Description
+Contains info (and data) of one audio file.
+
+##### Properties
+* filename: `str` Name of the file, including extension
+* duration: `float` Duration of audio in seconds
+* channels: `int` Amount of channels
+* samples: `int` Amount of samples
+* sampling_rate `int` Sampling rate
 
 
 ## Custom Parsing
