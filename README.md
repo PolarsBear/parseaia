@@ -14,11 +14,22 @@ print(myproj.Screen1.UI.Properties.Components) # Printing out all the UI element
 ```
 This example prints out all the UI elements in the screen "Screen1" (The default screen name when you create an app in app inventor, most apps will have it)
 
+# GUI
+There is also an inspector GUI for exploring app inventor projects
+
+You'll need PyQt5 to run it:
+`pip install PyQt5`
+
+Then you can run:
+`python -m parseaia`
+
 # TODO
 
 - Add some more error catching
 - Add support for video files
-- Create `__main__`
+
+# Known issues
+- `__main__` Does not support audio files
 
 # Links
 - [Documentation](https://parseaia.readthedocs.io/en/latest/)
