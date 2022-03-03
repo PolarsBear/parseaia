@@ -1,4 +1,4 @@
-from .funcs import listBlocks
+from .funcs import list_blocks
 from .otherclasses import Base
 from .dictionaryutils import objectfromdict
 
@@ -144,7 +144,7 @@ class Code:
             self.blocks.append(Block(i))
 
         for i in self.blocks:
-            self.blockslist += listBlocks(i)
+            self.blockslist += list_blocks(i)
 
         self.blocksdict = {}
         for i in self.blockslist:
