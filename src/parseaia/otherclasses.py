@@ -3,13 +3,10 @@ import os
 import numpy
 from PIL import ImageFont
 from mutagen import File
-from soundfile import available_formats as av_fo
 
 import logging
 
 logger = logging.getLogger(__name__)
-
-logger.info(f"Available audio formats are: {av_fo()} (without FFMPEG) And, like, absolutely everything with FFMPEG")
 
 
 class Base:
