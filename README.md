@@ -8,9 +8,9 @@ The library works by extracting all of the data from an app inventor project. Th
 ```py
 from parseaia import Project
 
-myproj = Project("ExampleApp.aia") # Initiate a Project with the filepath to the .aia
+myproject = Project("MyApp.aia") # Initiate a Project with the filepath to the .aia
 
-print(myproj.Screen1.UI.Properties.Components) # Printing out all the UI elements
+print(myproject.Screen1.UI.Properties.Components) # Printing out all the UI elements
 ```
 This example prints out all the UI elements in the screen "Screen1" (The default screen name when you create an app in app inventor, most apps will have it)
 
