@@ -30,9 +30,6 @@ To open a file, just press File>Open and then select the .aia you want to open
 - Add some more error catching
 - Add support for video files
 
-# Known issues
-- `__main__` Does not support audio files
-
 # Links
 - [Documentation](https://parseaia.readthedocs.io/en/latest/)
 - [PyPI](https://pypi.org/project/parseaia/)
