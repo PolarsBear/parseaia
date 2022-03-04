@@ -56,6 +56,8 @@ class Project:
         with zipfile.PyZipFile(fp) as zipf:
             zipf.extractall(tempfp)
 
+
+
         d1 = os.listdir(f"{tempfp}/src/appinventor")[0]
         d2 = os.listdir(f"{tempfp}/src/appinventor/{d1}")[0]
         dir = f"{tempfp}/src/appinventor/{d1}/{d2}/"
@@ -65,6 +67,11 @@ class Project:
                 self.__setattr__(i.replace(".bky", "", 1), scr)
                 self.screens.append(scr)
 
+        self.parse_assets(tempfp)
+        # Delete temp folder and contents
+        delete_dir(tempfp)
+
+    def parse_assets(self, tempfp, is_thread=False):
         # Get assets
         assetpath = tempfp + "/assets/"
         if not os.path.exists(assetpath):
@@ -77,5 +84,5 @@ class Project:
             if self.parse_function.__code__.co_argcount == 3:  # Checking if parse function has 3 arguments (self, assetpath, filename)
                 self.parse_function(self, assetpath, i)
 
-        # Delete temp folder and contents
-        delete_dir(tempfp)
+        if is_thread:
+            self.queue.put("parse_assets done")
