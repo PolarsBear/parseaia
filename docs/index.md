@@ -141,7 +141,7 @@ Contains info (and data) of one audio file.
 * duration: `float` Duration of audio in seconds
 * channels: `int` Amount of channels
 * samples: `int` Amount of samples
-* sampling_rate `int` Sampling rate
+* sample_rate `int` Sampling rate
 
 
 ## Custom Parsing
