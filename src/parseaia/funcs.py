@@ -1,6 +1,5 @@
 import os
-from .otherclasses import Font
-from .otherclasses import Audio
+from .otherclasses import Audio, Font, Video, Binary, TextAsset
 from PIL import Image
 
 import logging
@@ -50,9 +49,17 @@ def assetparse(obj, assetpath, filename):
                 # Is an audio file
                 logger.debug('Audio full filename: %s', path)
                 obj.audio.append(Audio(path, filename))
+
+            elif filename.endswith("mp4"):
+                obj.video.append(Video(path, filename))
+
             else:
-                # Not Image, Font or Audio, assuming it is text
-                with open(path, "r", encoding="UTF-8") as asset:
-                    obj.assets[filename] = asset.read()
+                try:
+                    # Not Image, Font or Audio, assuming it is text
+                    obj.assets[filename] = TextAsset(path, filename)
+
+                except UnicodeDecodeError:
+                    # Cannot parse, read it as binary
+                    obj.assets[filename] = Binary(path, filename)
 
             # This is an if else nightmare, I wish python had a switch keyword

@@ -10,13 +10,6 @@ def has_proper_str(obj):
     return type(obj).__str__ is not object.__str__
 
 
-class SimpleTextAsset:
-    text: str
-
-    def __init__(self, text):
-        self.text = text
-
-
 class UIMainWindow(object):
     def setup_ui(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -202,7 +195,7 @@ class UIMainWindow(object):
             self.assets.appendRow(QtGui.QStandardItem(i.filename))
 
         for i in self.project.assets:
-            self.assetlist.append(SimpleTextAsset(self.project.assets[i]))
+            self.assetlist.append(self.project.assets[i])
             self.assets.appendRow(QtGui.QStandardItem(i))
 
     def retranslate_ui(self, MainWindow):
